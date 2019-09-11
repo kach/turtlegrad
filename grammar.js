@@ -29,6 +29,7 @@ var grammar = {
           'strict': (d[1] ? true : false)}) },
     {"name": "expr", "symbols": ["name", "_", {"literal":"["}, "_", "expr", "_", {"literal":"]"}], "postprocess": d => ({'unop': d[0], 'arg': d[4]})},
     {"name": "expr", "symbols": ["expr", "_", "binop", "_", "expr"], "postprocess": d => ({'binop': d[2], 'left': d[0], 'right': d[4]})},
+    {"name": "expr", "symbols": [{"literal":"("}, "_", "expr", "_", {"literal":")"}], "postprocess": d => d[2]},
     {"name": "name$ebnf$1", "symbols": [/[a-zA-Z_]/]},
     {"name": "name$ebnf$1", "symbols": ["name$ebnf$1", /[a-zA-Z_]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "name", "symbols": ["name$ebnf$1"], "postprocess": d => (d[0].join(""))},

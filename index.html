@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 
+<title>Bidirectional Programming by Gradient Descent</title>
+
 <script src="nearley.js"></script>
 <script src="grammar.js"></script>
 <script src="machine.js"></script>
@@ -7,7 +9,7 @@
 <style>
 #code-in, #world {
   padding: 0;
-  height: 300px;
+  height: 400px;
   width: 300px;
 }
 
@@ -19,30 +21,48 @@ textarea:focus {
   outline: none;
   background: #ffe;
 }
-</style>
 
-<textarea id="code-in">
-set i to 8!
-set theta to 0
-while i do {
-  turn theta
-  set theta to theta + 0.1
-  forward 25!
-  set i to i - 1
+pre {
+  display: none;
 }
-</textarea>
 
-<style>
 canvas {
   border: 1px solid gray;
 }
 </style>
 
-<canvas id="world" height=300 width=300></canvas>
+<textarea id="code-in">set theta to degs[0.5 * 180!]
+set a to 50!
+set b to 100!
 
-<p>This is a tiny programming system inspired by several ideas:
+turn degs[-90!]
+turn theta
+forward a
+turn neg[theta]
+set phi to asin[(a / b) * sin[theta]]
+turn neg[phi]
+forward b
+turn phi
+
+turn degs[90!]
+forward neg[15!]
+turn degs[neg[90!]]
+set i to 4
+while i do {
+  set i to i - 1
+  forward 30!
+  turn degs[90!]
+}
+</textarea>
+<canvas id="world" height=400 width=300></canvas>
+
+<h1>Bidirectional Programming by Gradient Descent</h1>
+
+<p>This is a tiny toy programming system inspired by several ideas:
 <ul>
-  <li>Turtle graphics as in LOGO, but with a
+  <li>Turtle graphics as in <a
+  href="https://en.wikipedia.org/wiki/Logo_(programming_language)">LOGO</a>,
+  but with a
 
   <li><em>bidirectional</em> user interface as in <a
   href="http://ravichugh.github.io/sketch-n-sketch/">Sketch-n-Sketch</a>, but
@@ -50,3 +70,61 @@ canvas {
 
   <li><em>gradient-based</em> updates as in ML systems.
 </ul>
+
+<p>It's parsed by <a href="https://github.com/kach/nearley">nearley</a> and the
+automatic differentiation is in forward-mode by <a
+href="https://en.wikipedia.org/wiki/Automatic_differentiation#Automatic_differentiation_using_dual_numbers">dual
+numbers</a>. Try some of these examples:</p>
+
+<button class="eg">Nautilus</button>
+<pre>set i to 18!
+set theta to 30!
+while i do {
+  forward 20!
+  set theta to theta * (90 / 100!)
+  turn degs[theta]
+  set i to i - 1
+}</pre>
+
+<button class="eg">Piston</button>
+<pre>set theta to degs[0.5 * 180!]
+set a to 50!
+set b to 100!
+
+turn degs[-90!]
+turn theta
+forward a
+turn neg[theta]
+set phi to asin[(a / b) * sin[theta]]
+turn neg[phi]
+forward b
+turn phi
+
+turn degs[90!]
+forward neg[15!]
+turn degs[neg[90!]]
+set i to 4
+while i do {
+  set i to i - 1
+  forward 30!
+  turn degs[90!]
+}</pre>
+
+<button class="eg">Cannon</button>
+<pre>set i to 20!
+
+set theta to degs[4.5 * 10!]
+set v to 1.5 * 10!
+
+set g to -1!
+set vx to v * cos[theta]
+set vy to v * sin[theta]
+forward -100!
+while i do {
+  set i to i - 1
+  forward vx
+  turn degs[-90!]
+  forward vy
+  turn degs[90!]
+  set vy to vy + g
+}</pre>
