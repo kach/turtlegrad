@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<script src="nearley.js"></script>
+<script src="grammar.js"></script>
+<script src="machine.js"></script>
+
+<style>
+#code-in, #world {
+  padding: 0;
+  height: 300px;
+  width: 300px;
+}
+
+textarea {
+  font-family: monospace;
+  resize: none;
+}
+textarea:focus {
+  outline: none;
+  background: #ffe;
+}
+</style>
+
+<textarea id="code-in">
+set i to 8!
+set theta to 0
+while i do {
+  turn theta
+  set theta to theta + 0.1
+  forward 25!
+  set i to i - 1
+}
+</textarea>
+
+<style>
+canvas {
+  border: 1px solid gray;
+}
+</style>
+
+<canvas id="world" height=300 width=300></canvas>
+
+<p>This is a tiny programming system inspired by several ideas:
+<ul>
+  <li>Turtle graphics as in LOGO, but with a
+
+  <li><em>bidirectional</em> user interface as in <a
+  href="http://ravichugh.github.io/sketch-n-sketch/">Sketch-n-Sketch</a>, but
+  using
+
+  <li><em>gradient-based</em> updates as in ML systems.
+</ul>
