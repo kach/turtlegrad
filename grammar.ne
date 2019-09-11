@@ -16,7 +16,7 @@ expr -> name                       {% d => ({'name': d[0]}) %}
        'span': [loc, d[0].length],
        'strict': (d[1] ? true : false)}) %}
 | name _ "[" _ expr _ "]"    {% d => ({'unop': d[0], 'arg': d[4]}) %}
-| expr _ binop _ expr        {% d => ({'binop': d[2], 'left': d[0], 'right': d[4]}) %}
+| expr _ binop _ expr        {% d => ({'binop': d[2], 'left': d[0], 'right': d[4]}) %} # this is wrong, TODO fix
 | "(" _ expr _ ")"           {% d => d[2] %}
 
 
